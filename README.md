@@ -19,8 +19,8 @@ I am currently building the "Brain" of the agent.
 
 | Agent | Description | Watch |
 | :--- | :--- | :--- |
-| **Market Trend Agent** | Detects user intent (Chat vs. Research) and routes accordingly. | [Watch Video](media/Market_Trend_Discovery_Agent-demo.mov) |
-| **Moodboard Agent** | Generates visual prompts and creates moodboards using Gemini. | [Watch Video](media/Moodboard_Agent-demo.mov) |
+| **Market Trend Agent** | Detects user intent (Chat vs. Research) and routes accordingly. | [Watch Video](media/Market_Trend_Discovery_Agent-demo.mp4) |
+| **Moodboard Agent** | Generates visual prompts and creates moodboards using Gemini. | [Watch Video](media/Moodboard_Agent-demo.mp4) |
 
 ## 🛠️ Setup
 This project runs on **Docker**.
