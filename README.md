@@ -15,8 +15,12 @@ I am currently building the "Brain" of the agent.
 - **Strict JSON Output:** Ensures the AI replies in a machine-readable format for n8n to process.
 - **Fallback Logic:** Robust error handling if the AI response is malformed.
 
-## 🎥 Demo
-*(Insert your GIF/Clip here later)*
+## 🎥 Demos
+
+| Agent | Description | Watch |
+| :--- | :--- | :--- |
+| **Market Trend Agent** | Detects user intent (Chat vs. Research) and routes accordingly. | [Watch Video](media/Market_Trend_Discovery_Agent-demo.mov) |
+| **Moodboard Agent** | Generates visual prompts and creates moodboards using Gemini. | [Watch Video](media/Moodboard_Agent-demo.mov) |
 
 ## 🛠️ Setup
 This project runs on **Docker**.
