@@ -71,7 +71,7 @@
           "parameters": [
             {
               "name": "x-goog-api-key",
-              "value": "AIzaSyAHNvfH2egHNrnHiTYvs3KhL8ObVKYWdq4"
+              "value": "YOUR_API_KEY_HERE"
             },
             {
               "name": "Content-type",
