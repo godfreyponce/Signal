@@ -1,4 +1,4 @@
-# TrendScout AI 🚀
+# Signal AI 
 
 **An intelligent market research agent powered by n8n and LLMs.**
 
@@ -26,4 +26,4 @@ This project runs on **Docker**.
 3. Access n8n at `localhost:5678`.
 
 ---
-*Created by Geovponce*
+*Created by GodfreyPonce*
