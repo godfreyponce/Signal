@@ -1,0 +1,267 @@
+{
+  "name": "Moodboard agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "5994ff4f-b714-42c1-a412-f6043183fdbb",
+      "name": "When chat message received",
+      "webhookId": "92436cc3-dd87-46d4-ab83-6f719880c36e"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Role: You are an expert image generation prompt engineer skilled in creating detailed, design-ready prompts for Gemini Pro image models.\n\nTask:\nTransform a short concept input (e.g., “bohemian rugs, neutral tones”) into a refined, ready-to-use prompt that produces a high-quality moodboard showcasing the style and materials described.\n\nGuidelines:\n\t•\tDescribe the style, color palette, lighting, textures, and composition implied in the input.\n\t•\tInclude a mix of close-up textures (fabrics, patterns, surfaces) and styled interior spaces (rooms, furniture, decor) that visually support the theme.\n\t•\tUse clear visual organization terms — e.g., “arranged as a moodboard,” “side-by-side photos,” or “grid layout of 4–6 images.”\n\t•\tSpecify mood and lighting naturally (e.g., warm daylight, soft focus, studio lighting).\n\t•\tKeep tone professional, clean, and trend-oriented, as if creating an inspiration board for a design team.\n\t•\tOutput only the final image prompt, without commentary or markdown formatting.\n\t•\tThe final text should be concise (ideally 1–2 sentences) and visually descriptive, optimized for Gemini’s prompt interpretation."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2ab09ccc-d69d-4fd9-8ac0-a11c8c708a84",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        112,
+        176
+      ],
+      "id": "8d76c498-c3ee-4d83-9c9c-614109196a39",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "dtg7o7QyNZawLkBj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let inputPrompt = $input.first().json.output;\n\n// 1. Remove line breaks\nlet cleanPrompt = inputPrompt.split(/\\r?\\n/).join(\" \");\n\n// 2. Remove Markdown (** and * bullets)\ncleanPrompt = cleanPrompt.replace(/\\*\\*/g, \"\").replace(/\\*/g, \"\");\n\n// 3. Replace double quotes with single quotes\ncleanPrompt = cleanPrompt.replace(/\"/g, \"'\");\n\n// 4. Build n8n-compatible return\nreturn [\n  {\n    json: {\n      prompt: cleanPrompt\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "6aef1e7f-a676-49d8-9542-94d88cba784f",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyAHNvfH2egHNrnHiTYvs3KhL8ObVKYWdq4"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        { \"text\": \"{{ $json.prompt }}\" }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"responseModalities\": [\"TEXT\", \"IMAGE\"]\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        768,
+        0
+      ],
+      "id": "51d1a386-f161-43d7-a708-5a551133bf53",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n    const responseData = item.json;\n\n    if (responseData?.candidates?.length > 0) {\n        const parts = responseData.candidates[0].content.parts;\n\n        // look for inlineData (image) in parts[0] or parts[1]\n        const imagePart = parts.find(p => p.inlineData);\n\n        if (imagePart) {\n            return {\n                json: {\n                    imageBase64: imagePart.inlineData.data\n                }\n            };\n        }\n    }\n\n    // if no image found\n    return { json: {} };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        976,
+        0
+      ],
+      "id": "778cc664-63e8-4563-beef-13ec35d33899",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "imageBase64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "3b8623c9-494b-4187-bb98-2c9b77bf604e",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "content": "# Moodboard agent:",
+        "height": 688,
+        "width": 1616
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -128,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "4a9ae9d4-6c79-4184-92d4-c0a8decde618",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## AI Agent:\n- generates a highly curated and detailed image generation prompt from the user input",
+        "height": 544,
+        "width": 384,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "c88ea163-59b4-4063-a097-b77d34ae1bcb",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Generates Image:\n- Gemini API call for image generation\n- Then by HTTP request we can generate images",
+        "height": 416,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        688,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "969f27d7-f94f-484e-a158-af71e46b027d",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Binary data -> image file\n- Converts base64 to a downloadable file",
+        "height": 368,
+        "width": 304,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1120,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "783528ab-d8e8-4389-aadf-4ec0fe3d6b88",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5fa6d665-b982-448d-9cb7-8250c9ad5bea",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1289796b22356aafa8f547c4cba0d0041f8a790992248457171690c2df6dd22d"
+  },
+  "id": "sGhdv3XvZCzfYqIh",
+  "tags": []
+}
