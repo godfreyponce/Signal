@@ -20,11 +20,15 @@ I am currently building the "Brain" of the agent.
 ### 1. Market Trend Discovery Agent
 **Intent detection & routing logic.**
 [![Market Trend Agent](https://img.youtube.com/vi/bhZeDg5qZcg/maxresdefault.jpg)](https://www.youtube.com/watch?v=bhZeDg5qZcg)
+[![Watch Video](https://img.shields.io/badge/▶-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=bhZeDg5qZcg)
+
 *Demonstrates how the agent distinguishes between general chat and research tasks.*
 
 ### 2. Moodboard Generator Agent
 **From text concept to visual asset.**
 [![Moodboard Agent](https://img.youtube.com/vi/tossaxBcPFM/maxresdefault.jpg)](https://www.youtube.com/watch?v=tossaxBcPFM)
+[![Watch Video](https://img.shields.io/badge/▶-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=tossaxBcPFM)
+
 *Shows the prompt engineering and image generation pipeline.*
 
 ## 🛠️ Setup
