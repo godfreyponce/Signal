@@ -2,7 +2,7 @@
 
 **An intelligent market research agent powered by n8n and LLMs.**
 
-TrendScout helps automate the discovery of product trends. Instead of manually searching, you can chat with this agent. It intelligently distinguishes between casual conversation and specific market research requests, routing them to the appropriate tools.
+Signal AI helps automate the discovery of product trends. Instead of manually searching, you can chat with this agent. It intelligently distinguishes between casual conversation and specific market research requests, routing them to the appropriate tools.
 
 ## 🚧 Current Status: Phase 1 (Intent Detection)
 
