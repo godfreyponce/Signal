@@ -1,35 +1,54 @@
-# Signal AI 
+# TrendScout AI (Signal) 🚀
 
-**An intelligent market research agent powered by n8n and LLMs.**
+**The Autonomous Market Intelligence Suite for E-Commerce.**
 
-Signal AI helps automate the discovery of product trends. Instead of manually searching, you can chat with this agent. It intelligently distinguishes between casual conversation and specific market research requests, routing them to the appropriate tools.
+TrendScout is a multi-agent system designed to automate the work of market analysts, strategists, and content creators. It unifies trend discovery, competitor monitoring, and content generation into a single pipeline.
 
-## 🚧 Current Status: Phase 1 (Intent Detection)
+## 🏗️ Architecture
+The system is composed of three specialized AI agents feeding into a central dashboard:
 
-I am currently building the "Brain" of the agent.
-- **Goal:** Accurately classify user messages.
-- **Tech:** n8n, Docker, JSON Parsing.
+1.  **Trend Discovery Agent:** Scans RSS & Google Search for emerging signals.
+2.  **Competitor Monitor:** Tracks pricing, listings, and reviews.
+3.  **Content & Insights:** Generates marketing copy based on real-time data.
 
-### Features
-- **Smart Routing:** Uses an LLM to analyze user input.
-- **Strict JSON Output:** Ensures the AI replies in a machine-readable format for n8n to process.
-- **Fallback Logic:** Robust error handling if the AI response is malformed.
+---
 
-## 🎥 Demos
+## 🚦 Roadmap & Progress
 
-### 1. Market Trend Discovery Agent
-**Intent detection & routing logic.**
-[![Market Trend Agent](https://img.youtube.com/vi/bhZeDg5qZcg/maxresdefault.jpg)](https://www.youtube.com/watch?v=bhZeDg5qZcg)
-[![Watch Video](https://img.shields.io/badge/▶-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=bhZeDg5qZcg)
+### ✅ Phase 1: Core Foundation & Intent
+- [x] **Smart Routing:** LLM-based intent detection (Chat vs. Research).
+- [x] **Visuals:** Moodboard Generator integration (Gemini Vision).
 
-*Demonstrates how the agent distinguishes between general chat and research tasks.*
+### 🚧 Phase 2: Trend Discovery Agent (Current Focus)
+- [x] **Signal Capture:** Aggregating data from design blogs via RSS feeds.
+- [x] **Data Filtering:** JavaScript logic to isolate recent (Last 7 Days) trends.
+- [ ] **Web Intelligence:** Surfacing fresh trends via Google Search integration.
+- [ ] **Data Extraction:** Web scraping product-level insights.
+- [ ] **Synthesis:** Merging all streams into a unified Trend Discovery Agent.
 
-### 2. Moodboard Generator Agent
-**From text concept to visual asset.**
-[![Moodboard Agent](https://img.youtube.com/vi/tossaxBcPFM/maxresdefault.jpg)](https://www.youtube.com/watch?v=tossaxBcPFM)
-[![Watch Video](https://img.shields.io/badge/▶-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=tossaxBcPFM)
+### 🔜 Phase 3: Competitor Monitoring Agent
+- [ ] **Strategy:** Defining competitive intelligence parameters.
+- [ ] **Scraping:** Extracting competitor listings, pricing, and reviews.
+- [ ] **Analysis:** Benchmarking and whitespace identification.
 
-*Shows the prompt engineering and image generation pipeline.*
+### 🔜 Phase 4: Content & Insights Agent
+- [ ] **Creative Logic:** Teaching the agent brand voice and creative thinking.
+- [ ] **Generation:** Producing blogs, captions, and campaign ideas based on data.
+
+### 🔜 Phase 5: Market Intelligence Dashboard
+- [ ] **Pipeline Merge:** Unifying Trend, Competitor, and Insight streams.
+- [ ] **Visualization:** Google Sheets/Slides dashboard for actionable business intel.
+
+---
+
+## 🎥 Demos (Completed Modules)
+
+| Module | Function | Watch |
+| :--- | :--- | :--- |
+| **Market Trend Agent** | Detects user intent (Chat vs. Research) and routes accordingly. | [![Watch](https://img.shields.io/badge/▶-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=bhZeDg5qZcg) |
+| **Moodboard Agent** | Generates visual prompts and creates moodboards using Gemini. | [![Watch](https://img.shields.io/badge/▶-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=tossaxBcPFM) |
+
+---
 
 ## 🛠️ Setup
 This project runs on **Docker**.
