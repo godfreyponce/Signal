@@ -121,6 +121,189 @@
       ],
       "id": "bc9e185c-f57b-4b77-bbf7-b2a368cfee87",
       "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        976,
+        960
+      ],
+      "id": "959d2510-0e1f-4fe6-915f-3eadd4045bf4",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "dtg7o7QyNZawLkBj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Simple AI agent\n\nWill answer simple user questions",
+        "height": 464,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        640
+      ],
+      "typeVersion": 1,
+      "id": "ae04c4e2-7c20-4906-a09f-c99483617679",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}\n",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        992,
+        736
+      ],
+      "id": "eef4be60-e558-46a8-b3cc-2db6fb85d881",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "url": "https://www.landryandarcari.com/blogs/news.atom",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        1728,
+        192
+      ],
+      "id": "07fae992-514a-404e-8d4d-e02160156ca4",
+      "name": "landy&arcari"
+    },
+    {
+      "parameters": {
+        "url": "https://humminghaus.com/blogs/blog.atom",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        1728,
+        32
+      ],
+      "id": "3c848fbd-8d69-4d6b-b15b-a6f58d464f0f",
+      "name": "humming_haus"
+    },
+    {
+      "parameters": {
+        "url": "https://www.rugs.com/blog/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        1728,
+        336
+      ],
+      "id": "1b4742c8-90bf-4bf8-a874-9637aa72b523",
+      "name": "rugs_blog"
+    },
+    {
+      "parameters": {
+        "url": "https://www.ruglove.co.uk/blogs/rugs.atom",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        1728,
+        496
+      ],
+      "id": "032881b4-98eb-46a6-876d-57220892bfdc",
+      "name": "rug_love"
+    },
+    {
+      "parameters": {
+        "content": "## RSS Feed\ngets post from different by RSS and filtered this today",
+        "height": 864,
+        "width": 400,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1616,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "2f106846-200b-418b-9e2f-58a158992180",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2144,
+        288
+      ],
+      "id": "d1050351-738d-4eb1-a5ee-e637d6d3bf41",
+      "name": "Merge - RSS Feeds"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "title, link, pubDate, content, contentSnippet, isoDate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2352,
+        320
+      ],
+      "id": "1c69b903-8e44-45b2-b7ee-bf302b80e199",
+      "name": "Split - RSS Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst now = new Date();\nconst twoDaysAgo = new Date();\ntwoDaysAgo.setDate(now.getDate() - 7); // only include last 7 days\n\nfor (const item of $input.all()) {\n  const isoDate = new Date(item.json.isoDate);\n  if (isoDate >= twoDaysAgo && isoDate <= now) {\n    output.push(item);\n  }\n}\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2560,
+        320
+      ],
+      "id": "ac6cbca5-bbc0-4528-b48f-e61a0937ce64",
+      "name": "Filter - Recent Items"
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/customsearch/v1",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2272,
+        -240
+      ],
+      "id": "d911b5e0-7c0a-4027-a450-cb8f3c1ced8e",
+      "name": "Google Search"
     }
   ],
   "pinData": {},
@@ -179,13 +362,128 @@
           }
         ]
       ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "humming_haus",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "landy&arcari",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "rugs_blog",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "rug_love",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Search",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "humming_haus": {
+      "main": [
+        [
+          {
+            "node": "Merge - RSS Feeds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "landy&arcari": {
+      "main": [
+        [
+          {
+            "node": "Merge - RSS Feeds",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "rugs_blog": {
+      "main": [
+        [
+          {
+            "node": "Merge - RSS Feeds",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "rug_love": {
+      "main": [
+        [
+          {
+            "node": "Merge - RSS Feeds",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Merge - RSS Feeds": {
+      "main": [
+        [
+          {
+            "node": "Split - RSS Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split - RSS Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter - Recent Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "e1fb6615-5e1f-477d-8837-80f19626f400",
+  "versionId": "47f77e8f-9c1d-46c4-9bcd-d41ba054a516",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "1289796b22356aafa8f547c4cba0d0041f8a790992248457171690c2df6dd22d"
